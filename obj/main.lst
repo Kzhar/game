@@ -2520,28 +2520,31 @@ Hexadecimal [16-Bits]
                               7 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
                               8 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
                               9 ;Now all unknown call wil be taken by the assembler as GLOBAL
-   0000 00                   10 x: .db #00
+   0000 0B                   10 x: .db #11
    0001 00                   11 y: .db #00
                              12 
    0002                      13 _main::
                              14    ;; Disable firmware to prevent it from interfering with string drawing
    0002 CD 00 00      [17]   15    call cpct_disableFirmware_asm
-                             16 
+   0005                      16 loop: 
                              17    ;; Calculate a video-memory location for printing a string
-   0005 11 00 C0      [10]   18    ld de, #CPCT_VMEM_START_ASM ;; DE = Pointer to start of the screen
-   0008 3A 00 00      [13]   19    ld a, (x)
-   000B 47            [ 4]   20    ld b, a                   ;; B = y coordinate (24 = 0x18)
-   000C 3A 01 00      [13]   21    ld a, (y)
-   000F 4F            [ 4]   22    ld c, a                   ;; C = x coordinate (16 = 0x10)
-                             23 
-   0010 CD 00 00      [17]   24    call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
-                             25 
-   0013 EB            [ 4]   26    ex de, hl 
-   0014 3E FF         [ 7]   27    ld a, #0xFF
-   0016 01 04 08      [10]   28    ld bc, #0x0804
-   0019 CD 00 00      [17]   29    call cpct_drawSolidBox_asm
-                             30 
-                             31    
-                             32 
-   001C                      33 loop:  
-   001C 18 FE         [12]   34    jr    loop
+   0005 11 00 C0      [10]   18    ld de, #0xC000    ;DE => Pointer to the start of screen video-memory
+   0008 21 00 00      [10]   19    ld hl, #x         ;HL => points to x Memory direction
+   000B 46            [ 7]   20    ld b, (hl)        ;Load HL content in B
+   000C 34            [11]   21    inc (hl)
+   000D 23            [ 6]   22    inc hl            ;HL => points to the next memory direction (Y)
+   000E 4E            [ 7]   23    ld c, (hl)        ;Load HL content in C
+   000F 34            [11]   24    inc (hl)
+                             25   
+                             26 
+   0010 CD 00 00      [17]   27    call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
+                             28 
+   0013 EB            [ 4]   29    ex de, hl 
+   0014 3E FF         [ 7]   30    ld a, #0xFF
+   0016 01 04 08      [10]   31    ld bc, #0x0804
+   0019 CD 00 00      [17]   32    call cpct_drawSolidBox_asm
+                             33  
+   001C CD 00 00      [17]   34    call cpct_waitVSYNC_asm
+   001F 76            [ 4]   35    halt
+   0020 76            [ 4]   36    halt 
+   0021 18 E2         [12]   37    jr    loop

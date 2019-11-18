@@ -1,14 +1,16 @@
 DEF .__.ABS. 0x0
 DEF l__DATA 0x0
-DEF l__CODE 0xEF
+DEF l__CODE 0xFC
 DEF s__CODE 0x4000
-DEF s__DATA 0x40EF
+DEF s__DATA 0x40FC
 DEF _main 0x4002
-DEF _cpct_disableFirmware 0x401E
-DEF _cpct_removeInterruptHandler 0x401E
-DEF cpct_disableFirmware_asm 0x401E
-DEF cpct_removeInterruptHandler_asm 0x401E
-DEF cpct_drawSolidBox_asm 0x402E
-DEF cpct_getScreenPtr_asm 0x40D2
-DEF _cpct_mode_rom_status 0x40EE
+DEF _cpct_waitVSYNC 0x4023
+DEF cpct_waitVSYNC_asm 0x4023
+DEF _cpct_disableFirmware 0x402B
+DEF _cpct_removeInterruptHandler 0x402B
+DEF cpct_disableFirmware_asm 0x402B
+DEF cpct_removeInterruptHandler_asm 0x402B
+DEF cpct_drawSolidBox_asm 0x403B
+DEF _cpct_mode_rom_status 0x40DF
+DEF cpct_getScreenPtr_asm 0x40E0
 LOAD obj/game.ihx

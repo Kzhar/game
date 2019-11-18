@@ -7,19 +7,22 @@
 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
 ;Now all unknown call wil be taken by the assembler as GLOBAL
-x: .db #00
+x: .db #11
 y: .db #00
 
 _main::
    ;; Disable firmware to prevent it from interfering with string drawing
    call cpct_disableFirmware_asm
-
+loop: 
    ;; Calculate a video-memory location for printing a string
-   ld de, #CPCT_VMEM_START_ASM ;; DE = Pointer to start of the screen
-   ld a, (x)
-   ld b, a                   ;; B = y coordinate (24 = 0x18)
-   ld a, (y)
-   ld c, a                   ;; C = x coordinate (16 = 0x10)
+   ld de, #0xC000    ;DE => Pointer to the start of screen video-memory
+   ld hl, #x         ;HL => points to x Memory direction
+   ld b, (hl)        ;Load HL content in B
+   inc (hl)
+   inc hl            ;HL => points to the next memory direction (Y)
+   ld c, (hl)        ;Load HL content in C
+   inc (hl)
+  
 
    call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
 
@@ -27,8 +30,8 @@ _main::
    ld a, #0xFF
    ld bc, #0x0804
    call cpct_drawSolidBox_asm
-
-   
-
-loop:  
+ 
+   call cpct_waitVSYNC_asm
+   halt
+   halt 
    jr    loop
