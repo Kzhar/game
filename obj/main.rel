@@ -1,0 +1,22 @@
+XL2
+H 2 areas 5 global symbols
+M cpct_keyboard
+S .__.ABS. Def0000
+S cpct_disableFirmware_asm Ref0000
+S cpct_drawSolidBox_asm Ref0000
+S cpct_getScreenPtr_asm Ref0000
+A _CODE size 1E flags 0 addr 0
+S _main Def0002
+A _DATA size 0 flags 0 addr 0
+T 00 00 00 00
+R 00 00 00 00
+T 02 00
+R 00 00 00 00
+T 02 00 CD 00 00 11 00 C0 3A 00 00 47 3A 01 00 4F
+R 00 00 00 00 02 03 01 00 00 09 00 00 00 0D 00 00
+T 10 00 CD 00 00 EB 3E FF 01 04 08 CD 00 00
+R 00 00 00 00 02 03 03 00 02 0C 02 00
+T 1C 00
+R 00 00 00 00
+T 1C 00 18 FE
+R 00 00 00 00
