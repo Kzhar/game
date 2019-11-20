@@ -11,7 +11,7 @@ rendersys_init::
 ;;===================================
 rendersys_update::
 
-_render_loop:
+_renloop:
 	push af
 	;; Calculate a video-memory location for printing a string
 	ld de, #0xC000  	;DE => Pointer to the start of screen video-memory
@@ -32,6 +32,6 @@ _render_loop:
 
 	ld bc, #entity_size
 	add ix, bc
-	jr _render_loop
+	jr _renloop
 
 

@@ -16,7 +16,7 @@ Hexadecimal [16-Bits]
                              11 ;;===================================
    0001                      12 rendersys_update::
                              13 
-   0001                      14 _render_loop:
+   0001                      14 _renloop:
    0001 F5            [11]   15 	push af
                              16 	;; Calculate a video-memory location for printing a string
    0002 11 00 C0      [10]   17 	ld de, #0xC000  	;DE => Pointer to the start of screen video-memory
@@ -37,6 +37,6 @@ Hexadecimal [16-Bits]
                              32 
    001E 01 00 00      [10]   33 	ld bc, #entity_size
    0021 DD 09         [15]   34 	add ix, bc
-   0023 18 DC         [12]   35 	jr _render_loop
+   0023 18 DC         [12]   35 	jr _renloop
                              36 
                              37 

@@ -3,7 +3,7 @@ Hexadecimal [16-Bits]
 
 
 
-                              1 ;; Include all CPCtelera constant definitions, macros and variables
+                              1  ;; Include all CPCtelera constant definitions, macros and variables
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 

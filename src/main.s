@@ -1,4 +1,4 @@
-;; Include all CPCtelera constant definitions, macros and variables
+ ;; Include all CPCtelera constant definitions, macros and variables
 .include "cpctelera.h.s"
 
 .area _DATA
