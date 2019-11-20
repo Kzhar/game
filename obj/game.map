@@ -7,51 +7,59 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000000  .__.ABS.                           cpct_video
+     00000000  .__.ABS.                           cpct_firmware
      00000000  l__DATA                         
-     000000FC  l__CODE                         
+     00000003  max_entities                       
+     00000007  entity_size                        
+     0000015D  l__CODE                         
      00004000  s__CODE                         
-     000040FC  s__DATA                         
+     0000415D  s__DATA                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    000000FC =         252. bytes (REL,CON)
+_CODE                               00004000    0000015D =         349. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004002  _main                              cpct_keyboard
-     00004023  _cpct_waitVSYNC                    cpct_video
-     00004023  cpct_waitVSYNC_asm                 cpct_video
-     0000402B  _cpct_disableFirmware              cpct_firmware
-     0000402B  _cpct_removeInterruptHandler       cpct_firmware
-     0000402B  cpct_disableFirmware_asm           cpct_firmware
-     0000402B  cpct_removeInterruptHandler_asm    cpct_firmware
-     0000403B  cpct_drawSolidBox_asm              cpct_sprites
-     000040DF  _cpct_mode_rom_status              cpct_firmware
-     000040E0  cpct_getScreenPtr_asm              cpct_video
+     00004000  rendersys_init                     
+     00004001  rendersys_update                   
+     00004033  _main                              cpct_keyboard
+     00004050  _num_entities                      
+     00004051  _last_elem_ptr                     
+     00004053  _entity_array                      
+     00004068  enetityman_getEntityArray_IX       
+     0000406D  enetityman_getNumEntities_A        
+     00004071  entityman_create                   
+     0000408C  _cpct_disableFirmware              cpct_firmware
+     0000408C  _cpct_removeInterruptHandler       cpct_firmware
+     0000408C  cpct_disableFirmware_asm           cpct_firmware
+     0000408C  cpct_removeInterruptHandler_asm    cpct_firmware
+     0000409C  cpct_drawSolidBox_asm              cpct_sprites
+     00004140  cpct_getScreenPtr_asm              cpct_video
+     0000415C  _cpct_mode_rom_status              cpct_firmware
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 
 Files Linked                              [ module(s) ]
 
+obj/render_system.rel                     [  ]
 obj/main.rel                              [ cpct_keyboard ]
+obj/entity_manager.rel                    [  ]
 
 
 Libraries Linked                          [ object file ]
 
 /home/Diego/cpctelera/cpctelera/cpctelera.lib
-                                          [ cpct_waitVSYNC.rel ]
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_removeInterruptHandler.rel ]
 /home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSolidBox_asmbindings.re ]
 /home/Diego/cpctelera/cpctelera/cpctelera.lib
-                                          [ cpc_mode_rom_status.rel ]
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_asmbindings.re ]
+/home/Diego/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpc_mode_rom_status.rel ]
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 

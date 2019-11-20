@@ -2520,31 +2520,31 @@ Hexadecimal [16-Bits]
                               7 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
                               8 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
                               9 ;Now all unknown call wil be taken by the assembler as GLOBAL
-   0000 0B                   10 x: .db #11
-   0001 00                   11 y: .db #00
+                             10 ;x: .db #11
+                             11 ;y: .db #00
                              12 
-   0002                      13 _main::
-                             14    ;; Disable firmware to prevent it from interfering with string drawing
-   0002 CD 00 00      [17]   15    call cpct_disableFirmware_asm
-   0005                      16 loop: 
-                             17    ;; Calculate a video-memory location for printing a string
-   0005 11 00 C0      [10]   18    ld de, #0xC000    ;DE => Pointer to the start of screen video-memory
-   0008 21 00 00      [10]   19    ld hl, #x         ;HL => points to x Memory direction
-   000B 46            [ 7]   20    ld b, (hl)        ;Load HL content in B
-   000C 34            [11]   21    inc (hl)
-   000D 23            [ 6]   22    inc hl            ;HL => points to the next memory direction (Y)
-   000E 4E            [ 7]   23    ld c, (hl)        ;Load HL content in C
-   000F 34            [11]   24    inc (hl)
-                             25   
-                             26 
-   0010 CD 00 00      [17]   27    call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in HL
+   0000 14 14 02 08 01 01    13 player: .db 20, 20, 2,  8,  1, 1, 0xF0
+        F0
+   0007 28 50 03 0C FF 00    14 enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
+        FF
+                             15 
+   000E                      16 _main::
+                             17    ;; Disable firmware to prevent it from interfering with string drawing
+   000E CD 00 00      [17]   18    call cpct_disableFirmware_asm
+                             19 
+                             20    ;;Init systems
+   0011 CD 00 00      [17]   21    call rendersys_init
+                             22 
+   0014 21 00 00      [10]   23    ld hl, #player
+   0017 CD 00 00      [17]   24    call entityman_create
+                             25 
+   001A 21 07 00      [10]   26    ld hl, #enemy
+   001D CD 00 00      [17]   27    call entityman_create
                              28 
-   0013 EB            [ 4]   29    ex de, hl 
-   0014 3E FF         [ 7]   30    ld a, #0xFF
-   0016 01 04 08      [10]   31    ld bc, #0x0804
-   0019 CD 00 00      [17]   32    call cpct_drawSolidBox_asm
-                             33  
-   001C CD 00 00      [17]   34    call cpct_waitVSYNC_asm
-   001F 76            [ 4]   35    halt
-   0020 76            [ 4]   36    halt 
-   0021 18 E2         [12]   37    jr    loop
+   0020                      29 loop:
+                             30    ;;
+   0020 CD 00 00      [17]   31    call enetityman_getEntityArray_IX
+   0023 CD 00 00      [17]   32    call enetityman_getNumEntities_A
+   0026 CD 00 00      [17]   33    call rendersys_update
+                             34 
+   0029 18 F5         [12]   35    jr loop
