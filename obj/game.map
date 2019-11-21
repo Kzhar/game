@@ -24,13 +24,13 @@ _CODE                               00004000    0000015D =         349. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004000  _num_entities                      
-     00004001  _last_elem_ptr                     
-     00004003  _entity_array                      
-     00004018  enetityman_getEntityArray_IX       
-     0000401D  enetityman_getNumEntities_A        
-     00004021  entityman_create                   
-     0000404A  _main                              cpct_keyboard
+     0000400E  _main                              cpct_keyboard
+     0000402B  _num_entities                      
+     0000402C  _last_elem_ptr                     
+     0000402E  _entity_array                      
+     00004043  entityman_getEntityArray_IX        
+     00004048  entityman_getNumEntities_A         
+     0000404C  entityman_create                   
      00004067  rendersys_init                     
      00004068  rendersys_update                   
      0000408C  _cpct_disableFirmware              cpct_firmware
@@ -45,8 +45,10 @@ _CODE                               00004000    0000015D =         349. bytes (R
 
 Files Linked                              [ module(s) ]
 
-obj/entity_manager.rel                    [  ]
+obj/entity_manager.h.rel                  [  ]
+obj/render_system.h.rel                   [  ]
 obj/main.rel                              [ cpct_keyboard ]
+obj/entity_manager.rel                    [  ]
 obj/render_system.rel                     [  ]
 
 

@@ -14,11 +14,11 @@ Hexadecimal [16-Bits]
    0003                       9 _entity_array::
    0003                      10 	.ds max_entities * entity_size 
                              11 
-   0018                      12 enetityman_getEntityArray_IX::
+   0018                      12 entityman_getEntityArray_IX::
    0018 DD 21 03 00   [14]   13 	ld ix, #_entity_array
    001C C9            [10]   14 	ret
                              15 
-   001D                      16 enetityman_getNumEntities_A::
+   001D                      16 entityman_getNumEntities_A::
    001D 3A 00 00      [13]   17 	ld a, (_num_entities)
    0020 C9            [10]   18 	ret
                              19 ;====================================================
@@ -27,9 +27,9 @@ Hexadecimal [16-Bits]
                              22 ;====================================================
    0021                      23 entityman_create::
                              24 
-   0021 ED 5B 01 00   [20]   25 	ld de, (_last_elem_ptr)
-   0025 01 07 00      [10]   26 	ld bc, #entity_size
-   0028 ED B0         [21]   27 	ldir 
+   0021 ED 5B 01 00   [20]   25 	ld de, (_last_elem_ptr)		;;
+   0025 01 07 00      [10]   26 	ld bc, #entity_size		;;
+   0028 ED B0         [21]   27 	ldir 				;;
                              28 
    002A 3A 00 00      [13]   29 	ld a, (_num_entities)
    002D 3C            [ 4]   30 	inc a

@@ -5,10 +5,10 @@ S .__.ABS. Def0000
 S entity_size Def0007
 A _CODE size 3C flags 0 addr 0
 S _last_elem_ptr Def0001
-S enetityman_getEntityArray_IX Def0018
+S entityman_getNumEntities_A Def001D
 S entityman_create Def0021
-S enetityman_getNumEntities_A Def001D
 S _num_entities Def0000
+S entityman_getEntityArray_IX Def0018
 S _entity_array Def0003
 T 00 00 00 03 00
 R 00 00 00 00 00 03 00 00

@@ -1,14 +1,16 @@
- ;; Include all CPCtelera constant definitions, macros and variables
+;; Include all CPCtelera constant definitions, macros and variables
 .include "cpctelera.h.s"
+.include "entity_manager.h.s"
+.include "render_system.h.s"
 
 .area _DATA
 .area _CODE
 ;GLOBAL DECLARATIONS
+.globl cpct_disableFirmware_asm 
+
 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
 ;Now all unknown call wil be taken by the assembler as GLOBAL
-;x: .db #11
-;y: .db #00
 
 player: .db 20, 20, 2,  8,  1, 1, 0xF0
 enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
@@ -28,8 +30,8 @@ _main::
 
 loop:
    ;;
-   call enetityman_getEntityArray_IX
-   call enetityman_getNumEntities_A
+   call entityman_getEntityArray_IX
+   call entityman_getNumEntities_A
    call rendersys_update
 
    jr loop

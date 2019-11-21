@@ -9,36 +9,36 @@ Hexadecimal [16-Bits]
                      0003     4 max_entities == 3
                      0007     5 entity_size  == 7		;x, y, w, h, vx, vy, color 
                               6 
-   4000 00                    7 _num_entities:: .db 00
-   4001 03 40                 8 _last_elem_ptr:: .dw _entity_array
-   4003                       9 _entity_array::
-   4003                      10 	.ds max_entities * entity_size 
+   402B 00                    7 _num_entities:: .db 00
+   402C 2E 40                 8 _last_elem_ptr:: .dw _entity_array
+   402E                       9 _entity_array::
+   402E                      10 	.ds max_entities * entity_size 
                              11 
-   4018                      12 enetityman_getEntityArray_IX::
-   4018 DD 21 03 40   [14]   13 	ld ix, #_entity_array
-   401C C9            [10]   14 	ret
+   4043                      12 entityman_getEntityArray_IX::
+   4043 DD 21 2E 40   [14]   13 	ld ix, #_entity_array
+   4047 C9            [10]   14 	ret
                              15 
-   401D                      16 enetityman_getNumEntities_A::
-   401D 3A 00 40      [13]   17 	ld a, (_num_entities)
-   4020 C9            [10]   18 	ret
+   4048                      16 entityman_getNumEntities_A::
+   4048 3A 2B 40      [13]   17 	ld a, (_num_entities)
+   404B C9            [10]   18 	ret
                              19 ;====================================================
                              20 ;INPUT
                              21 ;	HL: Pointer to entity initialier byte (7 dates)
                              22 ;====================================================
-   4021                      23 entityman_create::
+   404C                      23 entityman_create::
                              24 
-   4021 ED 5B 01 40   [20]   25 	ld de, (_last_elem_ptr)
-   4025 01 07 00      [10]   26 	ld bc, #entity_size
-   4028 ED B0         [21]   27 	ldir 
+   404C ED 5B 2C 40   [20]   25 	ld de, (_last_elem_ptr)		;;
+   4050 01 07 00      [10]   26 	ld bc, #entity_size		;;
+   4053 ED B0         [21]   27 	ldir 				;;
                              28 
-   402A 3A 00 40      [13]   29 	ld a, (_num_entities)
-   402D 3C            [ 4]   30 	inc a
-   402E 32 00 40      [13]   31 	ld (_num_entities), a
+   4055 3A 2B 40      [13]   29 	ld a, (_num_entities)
+   4058 3C            [ 4]   30 	inc a
+   4059 32 2B 40      [13]   31 	ld (_num_entities), a
                              32 
-   4031 2A 01 40      [16]   33 	ld hl, (_last_elem_ptr)
-   4034 01 07 00      [10]   34 	ld bc, #entity_size
-   4037 09            [11]   35 	add hl, bc
-   4038 22 01 40      [16]   36 	ld (_last_elem_ptr), hl 
+   405C 2A 2C 40      [16]   33 	ld hl, (_last_elem_ptr)
+   405F 01 07 00      [10]   34 	ld bc, #entity_size
+   4062 09            [11]   35 	add hl, bc
+   4063 22 2C 40      [16]   36 	ld (_last_elem_ptr), hl 
                              37 
-   403B C9            [10]   38 	ret 
+   4066 C9            [10]   38 	ret 
                              39 

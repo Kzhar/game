@@ -3,7 +3,7 @@ Hexadecimal [16-Bits]
 
 
 
-                              1  ;; Include all CPCtelera constant definitions, macros and variables
+                              1 ;; Include all CPCtelera constant definitions, macros and variables
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
@@ -2513,38 +2513,68 @@ Hexadecimal [16-Bits]
 
 
 
-                              3 
-                              4 .area _DATA
-                              5 .area _CODE
-                              6 ;GLOBAL DECLARATIONS
-                              7 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
-                              8 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
-                              9 ;Now all unknown call wil be taken by the assembler as GLOBAL
-                             10 ;x: .db #11
-                             11 ;y: .db #00
-                             12 
-   403C 14 14 02 08 01 01    13 player: .db 20, 20, 2,  8,  1, 1, 0xF0
+                              3 .include "entity_manager.h.s"
+                              1 ;============================================================
+                              2 ;============================================================
+                              3 ;ENTITY MANAGER HEADER 
+                              4 ;============================================================ 
+                              5 ;============================================================
+                              6 
+                              7 .globl entityman_create 
+                              8 .globl entityman_getEntityArray_IX 
+                              9 .globl entityman_getNumEntities_A 
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
+Hexadecimal [16-Bits]
+
+
+
+                              4 .include "render_system.h.s"
+                              1 ;===========================================================
+                              2 ;===========================================================
+                              3 ;ENDER SYSTEM HEADER
+                              4 ;===========================================================
+                              5 ;===========================================================
+                              6 
+                              7 .globl rendersys_init 
+                              8 .globl rendersys_update 
+                              9 
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 52.
+Hexadecimal [16-Bits]
+
+
+
+                              5 
+                              6 .area _DATA
+                              7 .area _CODE
+                              8 ;GLOBAL DECLARATIONS
+                              9 .globl cpct_disableFirmware_asm 
+                             10 
+                             11 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
+                             12 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
+                             13 ;Now all unknown call wil be taken by the assembler as GLOBAL
+                             14 
+   4000 14 14 02 08 01 01    15 player: .db 20, 20, 2,  8,  1, 1, 0xF0
         F0
-   4043 28 50 03 0C FF 00    14 enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
+   4007 28 50 03 0C FF 00    16 enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
         FF
-                             15 
-   404A                      16 _main::
-                             17    ;; Disable firmware to prevent it from interfering with string drawing
-   404A CD 8C 40      [17]   18    call cpct_disableFirmware_asm
-                             19 
-                             20    ;;Init systems
-   404D CD 67 40      [17]   21    call rendersys_init
-                             22 
-   4050 21 3C 40      [10]   23    ld hl, #player
-   4053 CD 21 40      [17]   24    call entityman_create
-                             25 
-   4056 21 43 40      [10]   26    ld hl, #enemy
-   4059 CD 21 40      [17]   27    call entityman_create
-                             28 
-   405C                      29 loop:
-                             30    ;;
-   405C CD 18 40      [17]   31    call enetityman_getEntityArray_IX
-   405F CD 1D 40      [17]   32    call enetityman_getNumEntities_A
-   4062 CD 68 40      [17]   33    call rendersys_update
-                             34 
-   4065 18 F5         [12]   35    jr loop
+                             17 
+   400E                      18 _main::
+                             19    ;; Disable firmware to prevent it from interfering with string drawing
+   400E CD 8C 40      [17]   20    call cpct_disableFirmware_asm
+                             21 
+                             22    ;;Init systems
+   4011 CD 67 40      [17]   23    call rendersys_init
+                             24 
+   4014 21 00 40      [10]   25    ld hl, #player
+   4017 CD 4C 40      [17]   26    call entityman_create
+                             27 
+   401A 21 07 40      [10]   28    ld hl, #enemy
+   401D CD 4C 40      [17]   29    call entityman_create
+                             30 
+   4020                      31 loop:
+                             32    ;;
+   4020 CD 43 40      [17]   33    call entityman_getEntityArray_IX
+   4023 CD 48 40      [17]   34    call entityman_getNumEntities_A
+   4026 CD 68 40      [17]   35    call rendersys_update
+                             36 
+   4029 18 F5         [12]   37    jr loop

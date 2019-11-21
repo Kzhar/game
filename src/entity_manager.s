@@ -9,11 +9,11 @@ _last_elem_ptr:: .dw _entity_array
 _entity_array::
 	.ds max_entities * entity_size 
 
-enetityman_getEntityArray_IX::
+entityman_getEntityArray_IX::
 	ld ix, #_entity_array
 	ret
 
-enetityman_getNumEntities_A::
+entityman_getNumEntities_A::
 	ld a, (_num_entities)
 	ret
 ;====================================================
@@ -22,9 +22,9 @@ enetityman_getNumEntities_A::
 ;====================================================
 entityman_create::
 
-	ld de, (_last_elem_ptr)
-	ld bc, #entity_size
-	ldir 
+	ld de, (_last_elem_ptr)		;;
+	ld bc, #entity_size		;;
+	ldir 				;;
 
 	ld a, (_num_entities)
 	inc a
