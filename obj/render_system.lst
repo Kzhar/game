@@ -6,37 +6,69 @@ Hexadecimal [16-Bits]
                               1 ;
                               2 ;RENDER SYSTEM
                               3 ;
-                              4 
-   0000                       5 rendersys_init::
-   0000 C9            [10]    6 	ret
-                              7 ;;=====================================
-                              8 ;;IMPUT
-                              9 ;;	IX: Pointer to first entity to render 
-                             10 ;;	A: Number of entities to render
-                             11 ;;===================================
-   0001                      12 rendersys_update::
-                             13 
-   0001                      14 _renloop:
-   0001 F5            [11]   15 	push af
-                             16 	;; Calculate a video-memory location for printing a string
-   0002 11 00 C0      [10]   17 	ld de, #0xC000  	;DE => Pointer to the start of screen video-memory
-   0005 DD 4E 00      [19]   18 	ld c, 0(ix)		; C => X position of the entity 
-   0008 DD 46 01      [19]   19 	ld b, 1(ix)		; B => Y position of the entity 
-   000B CD 00 00      [17]   20 	call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in 
-                             21 	
-   000E EB            [ 4]   22 	ex de, hl 			;
-   000F DD 7E 06      [19]   23 	ld a, 6(ix)			;Color
-   0012 DD 4E 02      [19]   24 	ld c, 2(ix)			;Entity Width
-   0015 DD 46 03      [19]   25 	ld b, 3(ix)			;Entiy Height
-   0018 CD 00 00      [17]   26 	call cpct_drawSolidBox_asm
-                             27 
-   001B F1            [10]   28 	pop af
-                             29 
-   001C 3D            [ 4]   30 	dec a
-   001D C8            [11]   31 	ret z
-                             32 
-   001E 01 00 00      [10]   33 	ld bc, #entity_size
-   0021 DD 09         [15]   34 	add ix, bc
-   0023 18 DC         [12]   35 	jr _renloop
-                             36 
+                              4 ;==============================
+                              5 ;GLOBAL 
+                              6 ;==============================
+                              7 .globl cpct_getScreenPtr_asm
+                              8 .globl cpct_drawSolidBox_asm 
+                              9 
+                             10 ;==============================
+                             11 ;;INCLUDES
+                             12 ;==============================
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
+Hexadecimal [16-Bits]
+
+
+
+                             13 .include "entity_manager.h.s"
+                              1 ;============================================================
+                              2 ;============================================================
+                              3 ;ENTITY MANAGER HEADER 
+                              4 ;============================================================ 
+                              5 ;============================================================
+                              6 
+                              7 .globl entityman_create 
+                              8 .globl entityman_getEntityArray_IX 
+                              9 .globl entityman_getNumEntities_A 
+                             10 
+                             11 .globl entity_size 
+                             12 .globl max_entities
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 3.
+Hexadecimal [16-Bits]
+
+
+
+                             14 
+   0000                      15 rendersys_init::
+   0000 C9            [10]   16 	ret
+                             17 ;;=====================================
+                             18 ;;IMPUT
+                             19 ;;	IX: Pointer to first entity to render 
+                             20 ;;	A: Number of entities to render
+                             21 ;;===================================
+   0001                      22 rendersys_update::
+                             23 
+   0001                      24 _renloop:
+   0001 F5            [11]   25 	push af
+                             26 	;; Calculate a video-memory location for printing a string
+   0002 11 00 C0      [10]   27 	ld de, #0xC000  	;DE => Pointer to the start of screen video-memory
+   0005 DD 4E 00      [19]   28 	ld c, 0(ix)		; C => X position of the entity 
+   0008 DD 46 01      [19]   29 	ld b, 1(ix)		; B => Y position of the entity 
+   000B CD 00 00      [17]   30 	call cpct_getScreenPtr_asm    ;; Calculate video memory location and return it in 
+                             31 	
+   000E EB            [ 4]   32 	ex de, hl 			;
+   000F DD 7E 06      [19]   33 	ld a, 6(ix)			;Color
+   0012 DD 4E 02      [19]   34 	ld c, 2(ix)			;Entity Width
+   0015 DD 46 03      [19]   35 	ld b, 3(ix)			;Entiy Height
+   0018 CD 00 00      [17]   36 	call cpct_drawSolidBox_asm
                              37 
+   001B F1            [10]   38 	pop af
+                             39 
+   001C 3D            [ 4]   40 	dec a
+   001D C8            [11]   41 	ret z
+                             42 
+   001E 01 00 00      [10]   43 	ld bc, #entity_size
+   0021 DD 09         [15]   44 	add ix, bc
+   0023 18 DC         [12]   45 	jr _renloop
+                             46 
+                             47 

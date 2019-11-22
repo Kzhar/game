@@ -12,3 +12,6 @@ Hexadecimal [16-Bits]
                               7 .globl entityman_create 
                               8 .globl entityman_getEntityArray_IX 
                               9 .globl entityman_getNumEntities_A 
+                             10 
+                             11 .globl entity_size 
+                             12 .globl max_entities

@@ -1,6 +1,16 @@
 ;
 ;RENDER SYSTEM
 ;
+;==============================
+;GLOBAL 
+;==============================
+.globl cpct_getScreenPtr_asm
+.globl cpct_drawSolidBox_asm 
+
+;==============================
+;;INCLUDES
+;==============================
+.include "entity_manager.h.s"
 
 rendersys_init::
 	ret
