@@ -1,8 +1,7 @@
 XL2
-H 1 areas 9 global symbols
+H 1 areas 8 global symbols
 S max_entities Def0003
 S .__.ABS. Def0000
-S entity_size Def0007
 A _CODE size 3C flags 0 addr 0
 S _last_elem_ptr Def0001
 S entityman_getNumEntities_A Def001D
@@ -14,7 +13,9 @@ T 00 00 00 03 00
 R 00 00 00 00 00 03 00 00
 T 03 00
 R 00 00 00 00
-T 03 00
+T 03 00 DE AD DE AD DE AD AA DE AD DE AD DE AD AA
+R 00 00 00 00
+T 11 00 DE AD DE AD DE AD AA
 R 00 00 00 00
 T 18 00
 R 00 00 00 00

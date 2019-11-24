@@ -9,9 +9,43 @@ Hexadecimal [16-Bits]
                               4 ;============================================================ 
                               5 ;============================================================
                               6 
-                              7 .globl entityman_create 
-                              8 .globl entityman_getEntityArray_IX 
-                              9 .globl entityman_getNumEntities_A 
-                             10 
-                             11 .globl entity_size 
-                             12 .globl max_entities
+                              7 ;global functions 
+                              8 .globl entityman_create 
+                              9 .globl entityman_getEntityArray_IX 
+                             10 .globl entityman_getNumEntities_A 
+                             11 
+                             12 ;Global variables
+                             13 .globl max_entities
+                             14 
+                             15 ; Entity Definiton macro
+                             16 .macro DefineEntityAnonymous _x, _y, _vx, _vy, _w, _h, _color 
+                             17    .db _x 
+                             18    .db _y 
+                             19    .db _w 
+                             20    .db _h 
+                             21    .db _vx
+                             22    .db _vy 
+                             23    .db _color
+                             24 .endm
+                             25 
+                             26 .macro DefineEntity _name, _x, _y, _vx, _vy, _w, _h, _color 
+                             27 _name::
+                             28 	DefineEntityAnonymous _x, _y, _vx, _vy, _w, _h, _color ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                             29 .endm
+                             30 
+                     0000    31 e_x = 0
+                     0001    32 e_y = 1
+                     0002    33 e_w = 2
+                     0003    34 e_h = 3
+                     0004    35 e_vx = 4
+                     0005    36 e_vy = 5
+                     0006    37 e_col = 6
+                     0007    38 sizeof_e = 7
+                             39 
+                             40 
+                             41 .macro DefineEntityArray _name, _N 
+                             42 _name::
+                             43 	.rept _N
+                             44 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
+                             45 	.endm
+                             46 .endm

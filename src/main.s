@@ -2,18 +2,22 @@
 .include "cpctelera.h.s"
 .include "entity_manager.h.s"
 .include "render_system.h.s"
+.include "cpct_functions.h.s"
 
 .area _DATA
 .area _CODE
 ;GLOBAL DECLARATIONS
-.globl cpct_disableFirmware_asm 
+ 
 
 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
 ;Now all unknown call wil be taken by the assembler as GLOBAL
 
-player: .db 20, 20, 2,  8,  1, 1, 0xF0
-enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
+DefineEntity player, 20, 20, 1, 1, 2,  8, 0xF0
+DefineEntity enemy, 40, 80,-1, 0, 3, 12, 0xFF
+
+;player: .db 20, 20, 2,  8,  1, 1, 0xF0
+;enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
 
 _main::
    ;; Disable firmware to prevent it from interfering with string drawing

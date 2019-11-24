@@ -5,8 +5,11 @@ Symbol Table
 
     .__.$$$.=  2710 L   |     .__.ABS.=  0000 G   |     .__.CPU.=  0000 L
     .__.H$L.=  0000 L   |   0 _entity_   0003 GR  |   0 _last_el   0001 GR
-  0 _num_ent   0000 GR  |     entity_s=  0007 G   |   0 entityma   0021 GR
+  0 _num_ent   0000 GR  |     e_col   =  0006     |     e_h     =  0003 
+    e_vx    =  0004     |     e_vy    =  0005     |     e_w     =  0002 
+    e_x     =  0000     |     e_y     =  0001     |   0 entityma   0021 GR
   0 entityma   0018 GR  |   0 entityma   001D GR  |     max_enti=  0003 G
+    sizeof_e=  0007 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]

@@ -2520,12 +2520,46 @@ Hexadecimal [16-Bits]
                               4 ;============================================================ 
                               5 ;============================================================
                               6 
-                              7 .globl entityman_create 
-                              8 .globl entityman_getEntityArray_IX 
-                              9 .globl entityman_getNumEntities_A 
-                             10 
-                             11 .globl entity_size 
-                             12 .globl max_entities
+                              7 ;global functions 
+                              8 .globl entityman_create 
+                              9 .globl entityman_getEntityArray_IX 
+                             10 .globl entityman_getNumEntities_A 
+                             11 
+                             12 ;Global variables
+                             13 .globl max_entities
+                             14 
+                             15 ; Entity Definiton macro
+                             16 .macro DefineEntityAnonymous _x, _y, _vx, _vy, _w, _h, _color 
+                             17    .db _x 
+                             18    .db _y 
+                             19    .db _w 
+                             20    .db _h 
+                             21    .db _vx
+                             22    .db _vy 
+                             23    .db _color
+                             24 .endm
+                             25 
+                             26 .macro DefineEntity _name, _x, _y, _vx, _vy, _w, _h, _color 
+                             27 _name::
+                             28 	DefineEntityAnonymous _x, _y, _vx, _vy, _w, _h, _color ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                             29 .endm
+                             30 
+                     0000    31 e_x = 0
+                     0001    32 e_y = 1
+                     0002    33 e_w = 2
+                     0003    34 e_h = 3
+                     0004    35 e_vx = 4
+                     0005    36 e_vy = 5
+                     0006    37 e_col = 6
+                     0007    38 sizeof_e = 7
+                             39 
+                             40 
+                             41 .macro DefineEntityArray _name, _N 
+                             42 _name::
+                             43 	.rept _N
+                             44 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
+                             45 	.endm
+                             46 .endm
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 51.
 Hexadecimal [16-Bits]
 
@@ -2546,38 +2580,72 @@ Hexadecimal [16-Bits]
 
 
 
-                              5 
-                              6 .area _DATA
-                              7 .area _CODE
-                              8 ;GLOBAL DECLARATIONS
-                              9 .globl cpct_disableFirmware_asm 
-                             10 
-                             11 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
-                             12 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
-                             13 ;Now all unknown call wil be taken by the assembler as GLOBAL
-                             14 
-   4000 14 14 02 08 01 01    15 player: .db 20, 20, 2,  8,  1, 1, 0xF0
-        F0
-   4007 28 50 03 0C FF 00    16 enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
-        FF
-                             17 
-   400E                      18 _main::
-                             19    ;; Disable firmware to prevent it from interfering with string drawing
-   400E CD 8C 40      [17]   20    call cpct_disableFirmware_asm
+                              5 .include "cpct_functions.h.s"
+                              1 ;;=======================================================
+                              2 ;;=======================================================
+                              3 ;;CPCTELERA GLOBAL FUNCTIONS
+                              4 ;;=======================================================
+                              5 ;;=======================================================
+                              6 
+                              7 .globl cpct_getScreenPtr_asm
+                              8 .globl cpct_drawSolidBox_asm 
+                              9 .globl cpct_disableFirmware_asm
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 53.
+Hexadecimal [16-Bits]
+
+
+
+                              6 
+                              7 .area _DATA
+                              8 .area _CODE
+                              9 ;GLOBAL DECLARATIONS
+                             10  
+                             11 
+                             12 ;IMPORTANT!!!!!!!!!!!!!!!!!!!!!
+                             13 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
+                             14 ;Now all unknown call wil be taken by the assembler as GLOBAL
+                             15 
+   4061                      16 DefineEntity player, 20, 20, 1, 1, 2,  8, 0xF0
+   0000                       1 player::
+   0000                       2 	DefineEntityAnonymous 20, 20, 1, 1, 2, 8, 0xF0 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   4061 14                    1    .db 20 
+   4062 14                    2    .db 20 
+   4063 02                    3    .db 2 
+   4064 08                    4    .db 8 
+   4065 01                    5    .db 1
+   4066 01                    6    .db 1 
+   4067 F0                    7    .db 0xF0
+   4068                      17 DefineEntity enemy, 40, 80,-1, 0, 3, 12, 0xFF
+   0007                       1 enemy::
+   0007                       2 	DefineEntityAnonymous 40, 80, -1, 0, 3, 12, 0xFF ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   4068 28                    1    .db 40 
+   4069 50                    2    .db 80 
+   406A 03                    3    .db 3 
+   406B 0C                    4    .db 12 
+   406C FF                    5    .db -1
+   406D 00                    6    .db 0 
+   406E FF                    7    .db 0xFF
+                             18 
+                             19 ;player: .db 20, 20, 2,  8,  1, 1, 0xF0
+                             20 ;enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
                              21 
-                             22    ;;Init systems
-   4011 CD 67 40      [17]   23    call rendersys_init
-                             24 
-   4014 21 00 40      [10]   25    ld hl, #player
-   4017 CD 4C 40      [17]   26    call entityman_create
-                             27 
-   401A 21 07 40      [10]   28    ld hl, #enemy
-   401D CD 4C 40      [17]   29    call entityman_create
-                             30 
-   4020                      31 loop:
-                             32    ;;
-   4020 CD 43 40      [17]   33    call entityman_getEntityArray_IX
-   4023 CD 48 40      [17]   34    call entityman_getNumEntities_A
-   4026 CD 68 40      [17]   35    call rendersys_update
-                             36 
-   4029 18 F5         [12]   37    jr loop
+   406F                      22 _main::
+                             23    ;; Disable firmware to prevent it from interfering with string drawing
+   406F CD 8C 40      [17]   24    call cpct_disableFirmware_asm
+                             25 
+                             26    ;;Init systems
+   4072 CD 00 40      [17]   27    call rendersys_init
+                             28 
+   4075 21 61 40      [10]   29    ld hl, #player
+   4078 CD 46 40      [17]   30    call entityman_create
+                             31 
+   407B 21 68 40      [10]   32    ld hl, #enemy
+   407E CD 46 40      [17]   33    call entityman_create
+                             34 
+   4081                      35 loop:
+                             36    ;;
+   4081 CD 3D 40      [17]   37    call entityman_getEntityArray_IX
+   4084 CD 42 40      [17]   38    call entityman_getNumEntities_A
+   4087 CD 01 40      [17]   39    call rendersys_update
+                             40 
+   408A 18 F5         [12]   41    jr loop

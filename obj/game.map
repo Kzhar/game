@@ -10,11 +10,9 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  .__.ABS.                           cpct_firmware
      00000000  l__DATA                         
      00000003  max_entities                       
-     00000007  entity_size                        
      0000015D  l__CODE                         
      00004000  s__CODE                         
      0000415D  s__DATA                         
-
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
@@ -24,15 +22,17 @@ _CODE                               00004000    0000015D =         349. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000400E  _main                              cpct_keyboard
-     0000402B  _num_entities                      
-     0000402C  _last_elem_ptr                     
-     0000402E  _entity_array                      
-     00004043  entityman_getEntityArray_IX        
-     00004048  entityman_getNumEntities_A         
-     0000404C  entityman_create                   
-     00004067  rendersys_init                     
-     00004068  rendersys_update                   
+     00004000  rendersys_init                     
+     00004001  rendersys_update                   
+     00004025  _num_entities                      
+     00004026  _last_elem_ptr                     
+     00004028  _entity_array                      
+     0000403D  entityman_getEntityArray_IX        
+     00004042  entityman_getNumEntities_A         
+     00004046  entityman_create                   
+     00004061  player                             cpct_keyboard
+     00004068  enemy                              cpct_keyboard
+     0000406F  _main                              cpct_keyboard
      0000408C  _cpct_disableFirmware              cpct_firmware
      0000408C  _cpct_removeInterruptHandler       cpct_firmware
      0000408C  cpct_disableFirmware_asm           cpct_firmware
@@ -40,27 +40,27 @@ _CODE                               00004000    0000015D =         349. bytes (R
      0000409C  cpct_drawSolidBox_asm              cpct_sprites
      00004140  cpct_getScreenPtr_asm              cpct_video
      0000415C  _cpct_mode_rom_status              cpct_firmware
-
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 
 Files Linked                              [ module(s) ]
 
-obj/entity_manager.h.rel                  [  ]
+obj/cpct_functions.h.rel                  [  ]
 obj/render_system.h.rel                   [  ]
-obj/main.rel                              [ cpct_keyboard ]
-obj/entity_manager.rel                    [  ]
 obj/render_system.rel                     [  ]
+obj/entity_manager.rel                    [  ]
+obj/main.rel                              [ cpct_keyboard ]
+obj/entity_manager.h.rel                  [  ]
 
 
 Libraries Linked                          [ object file ]
 
-/home/diego/cpctelera/cpctelera/cpctelera.lib
+/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_removeInterruptHandler.rel ]
-/home/diego/cpctelera/cpctelera/cpctelera.lib
+/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSolidBox_asmbindings.re ]
-/home/diego/cpctelera/cpctelera/cpctelera.lib
+/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_asmbindings.re ]
-/home/diego/cpctelera/cpctelera/cpctelera.lib
+/home/Diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpc_mode_rom_status.rel ]
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
