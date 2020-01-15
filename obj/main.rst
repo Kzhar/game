@@ -2605,47 +2605,47 @@ Hexadecimal [16-Bits]
                              13 ;In build_config.mk we add -g flag in (Z80ASMFLAGS   := -l -o -s -g)
                              14 ;Now all unknown call wil be taken by the assembler as GLOBAL
                              15 
-   4061                      16 DefineEntity player, 20, 20, 1, 1, 2,  8, 0xF0
+   403C                      16 DefineEntity player, 20, 20, 1, 1, 2,  8, 0xF0
    0000                       1 player::
    0000                       2 	DefineEntityAnonymous 20, 20, 1, 1, 2, 8, 0xF0 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   4061 14                    1    .db 20 
-   4062 14                    2    .db 20 
-   4063 02                    3    .db 2 
-   4064 08                    4    .db 8 
-   4065 01                    5    .db 1
-   4066 01                    6    .db 1 
-   4067 F0                    7    .db 0xF0
-   4068                      17 DefineEntity enemy, 40, 80,-1, 0, 3, 12, 0xFF
+   403C 14                    1    .db 20 
+   403D 14                    2    .db 20 
+   403E 02                    3    .db 2 
+   403F 08                    4    .db 8 
+   4040 01                    5    .db 1
+   4041 01                    6    .db 1 
+   4042 F0                    7    .db 0xF0
+   4043                      17 DefineEntity enemy, 40, 80,-1, 0, 3, 12, 0xFF
    0007                       1 enemy::
    0007                       2 	DefineEntityAnonymous 40, 80, -1, 0, 3, 12, 0xFF ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   4068 28                    1    .db 40 
-   4069 50                    2    .db 80 
-   406A 03                    3    .db 3 
-   406B 0C                    4    .db 12 
-   406C FF                    5    .db -1
-   406D 00                    6    .db 0 
-   406E FF                    7    .db 0xFF
+   4043 28                    1    .db 40 
+   4044 50                    2    .db 80 
+   4045 03                    3    .db 3 
+   4046 0C                    4    .db 12 
+   4047 FF                    5    .db -1
+   4048 00                    6    .db 0 
+   4049 FF                    7    .db 0xFF
                              18 
                              19 ;player: .db 20, 20, 2,  8,  1, 1, 0xF0
                              20 ;enemy:  .db 40, 80, 3, 12, -1, 0, 0xFF
                              21 
-   406F                      22 _main::
+   404A                      22 _main::
                              23    ;; Disable firmware to prevent it from interfering with string drawing
-   406F CD 8C 40      [17]   24    call cpct_disableFirmware_asm
+   404A CD 8C 40      [17]   24    call cpct_disableFirmware_asm
                              25 
                              26    ;;Init systems
-   4072 CD 00 40      [17]   27    call rendersys_init
+   404D CD 67 40      [17]   27    call rendersys_init
                              28 
-   4075 21 61 40      [10]   29    ld hl, #player
-   4078 CD 46 40      [17]   30    call entityman_create
+   4050 21 3C 40      [10]   29    ld hl, #player
+   4053 CD 21 40      [17]   30    call entityman_create
                              31 
-   407B 21 68 40      [10]   32    ld hl, #enemy
-   407E CD 46 40      [17]   33    call entityman_create
+   4056 21 43 40      [10]   32    ld hl, #enemy
+   4059 CD 21 40      [17]   33    call entityman_create
                              34 
-   4081                      35 loop:
+   405C                      35 loop:
                              36    ;;
-   4081 CD 3D 40      [17]   37    call entityman_getEntityArray_IX
-   4084 CD 42 40      [17]   38    call entityman_getNumEntities_A
-   4087 CD 01 40      [17]   39    call rendersys_update
+   405C CD 18 40      [17]   37    call entityman_getEntityArray_IX
+   405F CD 1D 40      [17]   38    call entityman_getNumEntities_A
+   4062 CD 68 40      [17]   39    call rendersys_update
                              40 
-   408A 18 F5         [12]   41    jr loop
+   4065 18 F5         [12]   41    jr loop

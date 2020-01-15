@@ -22,17 +22,17 @@ _CODE                               00004000    0000015D =         349. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004000  rendersys_init                     
-     00004001  rendersys_update                   
-     00004025  _num_entities                      
-     00004026  _last_elem_ptr                     
-     00004028  _entity_array                      
-     0000403D  entityman_getEntityArray_IX        
-     00004042  entityman_getNumEntities_A         
-     00004046  entityman_create                   
-     00004061  player                             cpct_keyboard
-     00004068  enemy                              cpct_keyboard
-     0000406F  _main                              cpct_keyboard
+     00004000  _num_entities                      
+     00004001  _last_elem_ptr                     
+     00004003  _entity_array                      
+     00004018  entityman_getEntityArray_IX        
+     0000401D  entityman_getNumEntities_A         
+     00004021  entityman_create                   
+     0000403C  player                             cpct_keyboard
+     00004043  enemy                              cpct_keyboard
+     0000404A  _main                              cpct_keyboard
+     00004067  rendersys_init                     
+     00004068  rendersys_update                   
      0000408C  _cpct_disableFirmware              cpct_firmware
      0000408C  _cpct_removeInterruptHandler       cpct_firmware
      0000408C  cpct_disableFirmware_asm           cpct_firmware
@@ -44,23 +44,23 @@ _CODE                               00004000    0000015D =         349. bytes (R
 
 Files Linked                              [ module(s) ]
 
-obj/cpct_functions.h.rel                  [  ]
-obj/render_system.h.rel                   [  ]
-obj/render_system.rel                     [  ]
 obj/entity_manager.rel                    [  ]
-obj/main.rel                              [ cpct_keyboard ]
 obj/entity_manager.h.rel                  [  ]
+obj/render_system.h.rel                   [  ]
+obj/main.rel                              [ cpct_keyboard ]
+obj/render_system.rel                     [  ]
+obj/cpct_functions.h.rel                  [  ]
 
 
 Libraries Linked                          [ object file ]
 
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
+/home/diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_removeInterruptHandler.rel ]
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
+/home/diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSolidBox_asmbindings.re ]
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
+/home/diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_asmbindings.re ]
-/home/Diego/cpctelera/cpctelera/cpctelera.lib
+/home/diego/cpctelera/cpctelera/cpctelera.lib
                                           [ cpc_mode_rom_status.rel ]
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.

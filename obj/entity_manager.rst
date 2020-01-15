@@ -67,71 +67,71 @@ Hexadecimal [16-Bits]
                      0003     6 max_entities == 3
                               7 
                               8 
-   4025 00                    9 _num_entities:: .db 0
-   4026 28 40                10 _last_elem_ptr:: .dw _entity_array
+   4000 00                    9 _num_entities:: .db 0
+   4001 03 40                10 _last_elem_ptr:: .dw _entity_array
                              11 
-   4028                      12 DefineEntityArray _entity_array, max_entities
+   4003                      12 DefineEntityArray _entity_array, max_entities
    0003                       1 _entity_array::
                               2 	.rept max_entities
                               3 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
                               4 	.endm
    0003                       1 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
-   4028 DE                    1    .db 0xDE 
-   4029 AD                    2    .db 0xAD 
-   402A DE                    3    .db 0xDE 
-   402B AD                    4    .db 0xAD 
-   402C DE                    5    .db 0xDE
-   402D AD                    6    .db 0xAD 
-   402E AA                    7    .db 0xAA
+   4003 DE                    1    .db 0xDE 
+   4004 AD                    2    .db 0xAD 
+   4005 DE                    3    .db 0xDE 
+   4006 AD                    4    .db 0xAD 
+   4007 DE                    5    .db 0xDE
+   4008 AD                    6    .db 0xAD 
+   4009 AA                    7    .db 0xAA
    000A                       1 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
-   402F DE                    1    .db 0xDE 
-   4030 AD                    2    .db 0xAD 
-   4031 DE                    3    .db 0xDE 
-   4032 AD                    4    .db 0xAD 
-   4033 DE                    5    .db 0xDE
-   4034 AD                    6    .db 0xAD 
-   4035 AA                    7    .db 0xAA
+   400A DE                    1    .db 0xDE 
+   400B AD                    2    .db 0xAD 
+   400C DE                    3    .db 0xDE 
+   400D AD                    4    .db 0xAD 
+   400E DE                    5    .db 0xDE
+   400F AD                    6    .db 0xAD 
+   4010 AA                    7    .db 0xAA
    0011                       1 		DefineEntityAnonymous 0xDE, 0xAD, 0xDE, 0xAD, 0xDE, 0xAD, 0xAA
-   4036 DE                    1    .db 0xDE 
-   4037 AD                    2    .db 0xAD 
-   4038 DE                    3    .db 0xDE 
-   4039 AD                    4    .db 0xAD 
-   403A DE                    5    .db 0xDE
-   403B AD                    6    .db 0xAD 
-   403C AA                    7    .db 0xAA
+   4011 DE                    1    .db 0xDE 
+   4012 AD                    2    .db 0xAD 
+   4013 DE                    3    .db 0xDE 
+   4014 AD                    4    .db 0xAD 
+   4015 DE                    5    .db 0xDE
+   4016 AD                    6    .db 0xAD 
+   4017 AA                    7    .db 0xAA
                              13 	
                              14 ;.ds max_entities * sizeof_e 
                              15 
-   403D                      16 entityman_getEntityArray_IX::
-   403D DD 21 28 40   [14]   17 	ld ix, #_entity_array
-   4041 C9            [10]   18 	ret
+   4018                      16 entityman_getEntityArray_IX::
+   4018 DD 21 03 40   [14]   17 	ld ix, #_entity_array
+   401C C9            [10]   18 	ret
                              19 
-   4042                      20 entityman_getNumEntities_A::
-   4042 3A 25 40      [13]   21 	ld a, (_num_entities)
-   4045 C9            [10]   22 	ret
+   401D                      20 entityman_getNumEntities_A::
+   401D 3A 00 40      [13]   21 	ld a, (_num_entities)
+   4020 C9            [10]   22 	ret
                              23 ;====================================================
                              24 ;INPUT
                              25 ;	HL: Pointer to entity initialier byte (7 dates)
                              26 ;====================================================
-   4046                      27 entityman_create::
+   4021                      27 entityman_create::
                              28 
-   4046 ED 5B 26 40   [20]   29 	ld de, (_last_elem_ptr)		;;
-   404A 01 07 00      [10]   30 	ld bc, #sizeof_e		;;
-   404D ED B0         [21]   31 	ldir 				;;
+   4021 ED 5B 01 40   [20]   29 	ld de, (_last_elem_ptr)		;;
+   4025 01 07 00      [10]   30 	ld bc, #sizeof_e		;;
+   4028 ED B0         [21]   31 	ldir 				;;
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 4.
 Hexadecimal [16-Bits]
 
 
 
                              32 
-   404F 3A 25 40      [13]   33 	ld a, (_num_entities)
-   4052 3C            [ 4]   34 	inc a
-   4053 32 25 40      [13]   35 	ld (_num_entities), a
+   402A 3A 00 40      [13]   33 	ld a, (_num_entities)
+   402D 3C            [ 4]   34 	inc a
+   402E 32 00 40      [13]   35 	ld (_num_entities), a
                              36 
-   4056 2A 26 40      [16]   37 	ld hl, (_last_elem_ptr)
-   4059 01 07 00      [10]   38 	ld bc, #sizeof_e
-   405C 09            [11]   39 	add hl, bc
-   405D 22 26 40      [16]   40 	ld (_last_elem_ptr), hl 
+   4031 2A 01 40      [16]   37 	ld hl, (_last_elem_ptr)
+   4034 01 07 00      [10]   38 	ld bc, #sizeof_e
+   4037 09            [11]   39 	add hl, bc
+   4038 22 01 40      [16]   40 	ld (_last_elem_ptr), hl 
                              41 
-   4060 C9            [10]   42 	ret 
+   403B C9            [10]   42 	ret 
                              43 
