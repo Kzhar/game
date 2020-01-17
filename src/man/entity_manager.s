@@ -15,7 +15,7 @@
 ;==============================
 ;Entity components
 
-DefineComponentArrayStructure _entity, max_entities, DefineCmp_Entity
+DefineComponentArrayStructure _entity, max_entities, DefineCmp_Entity_default
 
 ;MANAGER PUBLIC FUNCTIONS
 ;============================================================
@@ -41,23 +41,57 @@ man_entity_init::
 	ret
 
 ;====================================================
+;RETURN:
+;	DE Points to added element
+;	BC Sizeof (Entity_t)
+;====================================================
+
+man_entity_new::
+	ld  hl, #_entity_num
+	inc (hl)			;_entity_num++
+
+	ld hl, (_entity_pend)
+	ld d, h
+	ld e, l				;DE = HL 
+
+	ld bc, #sizeof_e
+	add hl, bc			;next entity pointer to the last entity + size of each entity
+	ld (_entity_pend), hl		;Store pend pointer updated
+;====================================================
 ;INPUT
 ;	HL: Pointer to entity initialier byte (7 dates)
 ;====================================================
-entityman_create::
+man_entity_create::
+	push hl
+	call man_entity_new
 
-	ld de, (_last_elem_ptr)		;;
-	ld bc, #sizeof_e		;;
-	ldir 				;;
+	ld__ixh_d
+	ld__ixl_e	;IX=DE
 
-	ld a, (_num_entities)
-	inc a
-	ld (_num_entities), a
+	;copy initialization values to new entity
+	;DE points to the new added entity
+	;BC holds sizeof(entity_t)
+	;copy initialization values
 
-	ld hl, (_last_elem_ptr)
-	ld bc, #sizeof_e
-	add hl, bc
-	ld (_last_elem_ptr), hl 
+	pop hl
+	ldir		;transfer a byte of data from memory location pointed by hl to the memory location pointed by de (bc times)
 
-	ret 
+	ret
+	
+;entityman_create::
+
+;	ld de, (_last_elem_ptr)		;;
+;	ld bc, #sizeof_e		;;
+;	ldir 				;;
+
+;	ld a, (_num_entities)
+;	inc a
+;	ld (_num_entities), a
+
+;	ld hl, (_last_elem_ptr)
+;	ld bc, #sizeof_e
+;	add hl, bc
+;	ld (_last_elem_ptr), hl 
+
+;	ret 
 
